@@ -1,10 +1,9 @@
 import logging
+import os
 from urllib.parse import quote
 
 import aiohttp
 from pydantic import BaseModel
-
-from qna.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -32,10 +31,11 @@ class Resp(BaseModel):
 class WebSearch:
     def __init__(self):
         self.url = (
-            settings.googlesearch.base_url.unicode_string() + "?key={}&cx={}&safe={}"
+            os.environ.get("GOOGLESEARCH_BASE_URL") or "" + "?key={}&cx={}&safe={}"
         )
-        self.api_key = settings.googlesearch.api_key
-        self.cse_id = settings.googlesearch.cse_id
+        self.api_key = os.environ.get("GOOGLESEARCH_API_KEY")
+        self.cse_id = os.environ.get("GOOGLESEARCH_CSE_ID")
+
         self.session = aiohttp.ClientSession()
         self.quote_filter = {ord(i): None for i in "'\""}
 
