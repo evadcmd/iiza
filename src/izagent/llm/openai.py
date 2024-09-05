@@ -2,7 +2,6 @@ import os
 from enum import StrEnum
 
 from openai import AsyncOpenAI
-from pydantic import BaseModel
 
 default_openai_client = AsyncOpenAI(
     # This is the default and can be omitted
@@ -16,9 +15,11 @@ class Model(StrEnum):
     GPT4 = "gpt-4"
 
 
-class Client(BaseModel):
-    openai_client: AsyncOpenAI = default_openai_client
-    model: Model
+class Client:
+    def __init__(self, model: Model):
+        super().__init__()
+        self.openai_client: AsyncOpenAI = default_openai_client
+        self.model: Model = model
 
     async def completion(self, msg: str, stop: str | list[str] | None = None) -> str:
         res = await self.openai_client.chat.completions.create(

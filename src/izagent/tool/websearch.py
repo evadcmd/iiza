@@ -3,7 +3,7 @@ import os
 from urllib.parse import quote
 
 import aiohttp
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 logger = logging.getLogger(__name__)
 
@@ -18,20 +18,22 @@ class Errors(BaseModel):
 
 
 class Item(BaseModel):
+    model_config = ConfigDict(extra="ignore")
     title: str
     link: str
     snippet: str
 
 
 class Resp(BaseModel):
+    model_config = ConfigDict(extra="ignore")
     items: list[Item]
-    error: Errors | None
+    error: Errors | None = None
 
 
 class WebSearch:
     def __init__(self):
         self.url = (
-            os.environ.get("GOOGLESEARCH_BASE_URL") or "" + "?key={}&cx={}&safe={}"
+            os.environ.get("GOOGLESEARCH_BASE_URL") + "?key={}&cx={}&q={}&safe={}"
         )
         self.api_key = os.environ.get("GOOGLESEARCH_API_KEY")
         self.cse_id = os.environ.get("GOOGLESEARCH_CSE_ID")
@@ -43,7 +45,7 @@ class WebSearch:
         return "WebSearch"
 
     def __repr__(self) -> str:
-        return "A tool for obtaining information form the internet"
+        return "A tool for obtaining information from the internet"
 
     async def __call__(self, query: str, *, safe: bool = True) -> str:
         logger.info(f"{query=}")

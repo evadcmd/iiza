@@ -9,7 +9,7 @@ from izagent.llm import openai
 logger = logging.getLogger(__name__)
 
 
-selector = openai.Client(model=openai.Model.GPT3dot5)
+selector = openai.Client(model=openai.Model.GPT3dot5Turbo)
 answerer = openai.Client(model=openai.Model.GPT4)
 
 
@@ -39,6 +39,7 @@ async def induce(
                 content,
                 stop=mrkl.STOP_FLAGS,
             )
+            logger.info(f"{res=}")
 
             if m := mrkl.FINISH_REGEX.search(res):
                 return res[m.end() :]
@@ -50,8 +51,10 @@ async def induce(
                 #     break
             elif m := mrkl.ACTION_REGEX.search(res):
                 tool_name, tool_input = m.group(1), m.group(2)
+                logger.info(f"{tool_name=} {tool_input}")
                 try:
                     observation = await tool_map[tool_name](tool_input)
+                    logger.info(observation)
                 except Exception as e:
                     logger.warning(
                         f"tool[{tool_name=} {tool_input=}] execution failed: {e}"
