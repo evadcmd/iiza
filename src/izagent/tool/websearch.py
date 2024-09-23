@@ -45,7 +45,9 @@ class WebSearch:
         return "WebSearch"
 
     def __repr__(self) -> str:
-        return "A tool for obtaining information from the internet"
+        tool_description = "A tool for obtaining information from the internet"
+        input_format = "a string format websearch query"
+        return f"[tool-name]{str(self)} [tool-description] {tool_description} [input-format] {input_format}"
 
     async def __call__(self, query: str, *, safe: bool = True) -> str:
         logger.info(f"{query=}")

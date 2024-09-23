@@ -15,9 +15,10 @@ Observation: Record the outcome stemming from the executed action
 Thought: I have now acquired the definitive solution
 Final Answer: The ultimate response to the original input question
 
-Always strive to provide an answer within the "Final Answer" text section or fill in the text within "Thought/Action/Action Input" as an alternative.
-Summarize your findings based on the observed facts to the greatest extent possible using the same language as the input of the "Question".
-If you derive information from online resources, ALWAYS INCLUDE THE RELEVANT URLs as references at the end of your "Final Answer".
+* Always strive to provide an answer within the "Final Answer" text section or fill in the text within "Thought/Action/Action Input" as an alternative.
+* Summarize your findings based on the observed facts to the greatest extent possible.
+* If you derive information from online resources, ALWAYS INCLUDE THE RELEVANT URLs as references at the end of your "Final Answer".
+* You should give the answer containing information as much as possible based on the fact in Japanese in the Final Answer block. eg: ...Final Answer: "${{ use japanese here }}".
 
 Question: {input}
 Thought:"""

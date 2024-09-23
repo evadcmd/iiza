@@ -31,6 +31,8 @@ certifi==2024.8.30
 click==8.1.7
     # via typer
     # via uvicorn
+concurrent-log-handler==0.9.25
+    # via izagent
 coverage==7.6.1
     # via pytest-cov
 distro==1.9.0
@@ -86,6 +88,8 @@ packaging==24.1
     # via pytest
 pluggy==1.5.0
     # via pytest
+portalocker==2.10.1
+    # via concurrent-log-handler
 pydantic==2.8.2
     # via fastapi
     # via openai

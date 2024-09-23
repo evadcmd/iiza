@@ -1,12 +1,19 @@
 """Attempt to implement MRKL systems as described in arxiv.org/pdf/2205.00445.pdf."""
 
 import logging
-from typing import Awaitable, Callable, Sequence
 
-from izagent import mrkl
+from izagent import mrkl_tpl
 from izagent.llm import openai
+from izagent.tool.datetime import Datetime
+from izagent.tool.websearch import WebSearch
 
 logger = logging.getLogger(__name__)
+
+tools = [Datetime(), WebSearch()]
+
+tool_map = {str(tool): tool for tool in tools}
+tool_descriptions = "\n".join([f"{tool}: {repr(tool)}" for tool in tools])
+tool_names = ", ".join([f"{tool}: {str(tool)}" for tool in tools])
 
 
 selector = openai.Client(model=openai.Model.GPT3dot5Turbo)
@@ -15,19 +22,8 @@ answerer = openai.Client(model=openai.Model.GPT4)
 
 async def induce(
     question: str,
-    tools: Sequence[Callable[[str], Awaitable[str]]] | None = None,
 ) -> str:
-    if not tools:
-        return await answerer.completion(question)
-
-    tool_map: dict[str, Callable[[str], Awaitable[str]]] = {
-        str(tool): tool for tool in tools
-    }
-
-    tool_descriptions = "\n".join([f"{tool}: {repr(tool)}" for tool in tools])
-    tool_names = ", ".join([f"{tool}: {str(tool)}" for tool in tools])
-
-    content = mrkl.TEMPLATE.format(
+    prompt = mrkl_tpl.TEMPLATE.format(
         tool_descriptions=tool_descriptions,
         tool_names=tool_names,
         input=question,
@@ -35,21 +31,20 @@ async def induce(
 
     try:
         for _ in range(10):
-            res = await selector.completion(
-                content,
-                stop=mrkl.STOP_FLAGS,
+            logger.info(f"{prompt=}")
+            ans = await selector.completion(
+                prompt,
+                stop=mrkl_tpl.STOP_FLAGS,
             )
-            logger.info(f"{res=}")
+            logger.info(f"{ans=}")
 
-            if m := mrkl.FINISH_REGEX.search(res):
-                return res[m.end() :]
-                # if res := await conclusion_chain.apredict(
-                #     content=content + res[:m.end()]
-                # ):
-                #     return res
-                # else:
-                #     break
-            elif m := mrkl.ACTION_REGEX.search(res):
+            if m := mrkl_tpl.FINISH_REGEX.search(ans):
+                # return res[m.end() :]
+                if ans := await answerer.completion(prompt + ans[: m.end()]):
+                    return ans
+                else:
+                    break
+            elif m := mrkl_tpl.ACTION_REGEX.search(ans):
                 tool_name, tool_input = m.group(1), m.group(2)
                 logger.info(f"{tool_name=} {tool_input}")
                 try:
@@ -60,9 +55,9 @@ async def induce(
                         f"tool[{tool_name=} {tool_input=}] execution failed: {e}"
                     )
                     break
-                content += res + "Observation: " + observation + "\n"
+                prompt += ans + "Observation: " + observation + "\n"
             else:
-                logger.warning(f"parse llm output failed: {res}")
+                logger.warning(f"parse llm output failed: {ans}")
                 break
     except Exception as e:
         logger.error(e)

@@ -10,8 +10,7 @@ default_openai_client = AsyncOpenAI(
 
 
 class Model(StrEnum):
-    GPT3dot5 = "gpt-3.5"
-    GPT3dot5Turbo = "gpt-3.5-turbo"
+    GPT3dot5Turbo = "gpt-3.5-turbo-1106"
     GPT4 = "gpt-4"
 
 
@@ -30,7 +29,7 @@ class Client:
                     "content": msg,
                 }
             ],
-            temperature=0.9,
+            temperature=0.2,
             stop=stop,
         )
         return res.choices[0].message.content or ""
