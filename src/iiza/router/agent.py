@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from izagent import mrkl_agent
-from izagent.router import API_V0
+from iiza import mrkl_agent
+from iiza.router import API_V0
 
 router = APIRouter(prefix=API_V0, tags=[API_V0])
 
@@ -17,7 +17,7 @@ async def infer(msg: Message) -> str:
 
 
 # for testing
-from izagent.llm import openai
+from iiza.llm import openai
 
 
 @router.post("/plain")

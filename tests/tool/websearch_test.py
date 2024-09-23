@@ -1,6 +1,6 @@
 import pytest
 
-from izagent.tool.websearch import WebSearch
+from iiza.tool.websearch import WebSearch
 
 
 @pytest.mark.asyncio

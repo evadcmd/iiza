@@ -1,6 +1,6 @@
 import pytest
 
-from izagent.tool.datetime import Datetime
+from iiza.tool.datetime import Datetime
 
 
 @pytest.mark.asyncio

@@ -2,10 +2,10 @@
 
 import logging
 
-from izagent import mrkl_tpl
-from izagent.llm import openai
-from izagent.tool.datetime import Datetime
-from izagent.tool.websearch import WebSearch
+from iiza import mrkl_tpl
+from iiza.llm import openai
+from iiza.tool.datetime import Datetime
+from iiza.tool.websearch import WebSearch
 
 logger = logging.getLogger(__name__)
 

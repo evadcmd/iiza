@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from izagent.router import agent, liveness_probe
+from iiza.router import agent, liveness_probe
 
 api = FastAPI()
 
