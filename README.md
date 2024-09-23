@@ -1,4 +1,4 @@
-# izagent
+# iiza
 
 Attempt to implement MRKL systems as described in
 - https://arxiv.org/pdf/2205.00445.pdf
