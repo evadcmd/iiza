@@ -34,4 +34,4 @@ $ rye run dev
 swagger
 http://127.0.0.1:8000/docs#/
 
-you could compare the difference between api/v0/mrkl and api/v0/plain 
+you could compare the difference between `api/v0/mrkl` and `api/v0/plain`
