@@ -40,6 +40,7 @@ async def induce(
 
             if m := mrkl_tpl.FINISH_REGEX.search(ans):
                 # return res[m.end() :]
+                # let the answerer summarize the information received and provide the final answer.
                 if ans := await answerer.completion(prompt + ans[: m.end()]):
                     return ans
                 else:
