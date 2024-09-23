@@ -28,8 +28,8 @@ dev-dependencies = [
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/izagent"]
+packages = ["src/iiza"]
 
 [tool.rye.scripts]
-dev = { cmd = ["uvicorn", "izagent.main:api", "--reload"] }
+dev = { cmd = ["uvicorn", "iiza.main:api", "--reload"] }
 test = { cmd = ["pytest", "--cov", "-s"] }

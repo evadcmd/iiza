@@ -13,7 +13,7 @@
 aiohappyeyeballs==2.4.0
     # via aiohttp
 aiohttp==3.10.5
-    # via izagent
+    # via iiza
 aiosignal==1.3.1
     # via aiohttp
 annotated-types==0.7.0
@@ -32,7 +32,7 @@ click==8.1.7
     # via typer
     # via uvicorn
 concurrent-log-handler==0.9.25
-    # via izagent
+    # via iiza
 coverage==7.6.1
     # via pytest-cov
 distro==1.9.0
@@ -42,7 +42,7 @@ dnspython==2.6.1
 email-validator==2.2.0
     # via fastapi
 fastapi==0.112.2
-    # via izagent
+    # via iiza
 fastapi-cli==0.0.5
     # via fastapi
 frozenlist==1.4.1
@@ -81,7 +81,7 @@ multidict==6.0.5
     # via aiohttp
     # via yarl
 openai==1.43.0
-    # via izagent
+    # via iiza
 orjson==3.10.7
     # via fastapi
 packaging==24.1
