@@ -3,10 +3,10 @@
 A minimal implementation API for the MRKL algorithm.
 
 dependencies
-    - openai
-    - fastapi
-    - aiohttp
-    - concurrent-log-handler
+- openai
+- fastapi
+- aiohttp
+- concurrent-log-handler
 
 
 ```bash
