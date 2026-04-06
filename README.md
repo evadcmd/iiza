@@ -11,7 +11,7 @@ dependencies
 
 
 ```bash
-$ brew install rye
+$ brew install uv just
 ```
 
 provide the following secrets in .env file
@@ -26,8 +26,8 @@ OPENAI_API_KEY=${OPENAI_API_KEY}
 run server
 
 ```bash
-$ rye sync
-$ rye run dev
+$ uv sync
+$ just dev
 ```
 
 swagger
